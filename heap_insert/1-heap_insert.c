@@ -26,7 +26,7 @@ heap_t *heap_insert(heap_t **root, int value)
 	else
 		parent->right = new_node;
 
-	return (new_node);
+	return (heapify_up(new_node));
 }
 
 heap_t *find_free_parent(heap_t *root)
@@ -51,4 +51,24 @@ heap_t *find_free_parent(heap_t *root)
 	}
 
 	return (NULL);
+}
+
+/**
+ * heapify_up - Moves node up to maintain Max Heap property
+ * @node: Pointer to node to bubble up
+ * Return: Final position of node
+ */
+heap_t *heapify_up(heap_t *node)
+{
+	int temp;
+	
+	while (node && node->parent && node->n > node->parent->n)
+	{
+		temp = node->n;
+		node->n = node->parent->n;
+		node->parent->n = temp;
+		node = node->parent;
+	}
+
+	return (node);
 }
