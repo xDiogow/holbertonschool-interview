@@ -13,6 +13,6 @@ def minOperations(n):
         while n % div == 0:
             total += div
             n //= div
-        duv += 1
+        div += 1
 
     return total
