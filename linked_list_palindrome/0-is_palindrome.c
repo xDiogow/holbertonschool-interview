@@ -8,7 +8,7 @@ int is_palindrome(listint_t **head)
 	int stack[2048], index = -1;
 
 	if (*head == NULL)
-		return (0);
+		return (1);
 
 	while (fast && fast->next)
 	{
