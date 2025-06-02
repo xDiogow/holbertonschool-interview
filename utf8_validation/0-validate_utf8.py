@@ -1,4 +1,5 @@
-#!/bin/usr/python3
+#!/usr/bin/python3
+
 """
 Main file for UTF-8 Validation
 """
