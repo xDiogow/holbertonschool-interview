@@ -4,6 +4,7 @@
 Main file for UTF-8 Validation
 """
 
+
 def validUTF8(data):
     num_bytes = 0
 
