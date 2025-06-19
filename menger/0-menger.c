@@ -29,6 +29,9 @@ void menger(int level)
 	int size = 1;
 	int i, y, x;
 
+	if (level < 0)
+		return;
+
 	for (i = 0; i < level; i++)
 		size *= 3;
 
