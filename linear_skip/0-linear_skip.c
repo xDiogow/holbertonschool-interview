@@ -20,6 +20,9 @@ skiplist_t *linear_skip(skiplist_t *list, int value)
 		if (tmp->express->n > value)
 		{
 			max_express = tmp->express;
+			
+			printf(outputf_checked, tmp->index, tmp->n);
+
 			printf(outputf_found, tmp->index,
 				   max_express->index);
 			while (tmp->index < max_express->index)
