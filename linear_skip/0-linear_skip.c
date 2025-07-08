@@ -11,7 +11,7 @@ skiplist_t *linear_skip(skiplist_t *list, int value)
 		return (NULL);
 
 	tmp = list;
-
+	tmp = tmp->express;
 	while (tmp->express)
 	{
 		printf(outputf_checked, tmp->index,
