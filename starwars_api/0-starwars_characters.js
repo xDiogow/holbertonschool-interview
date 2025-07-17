@@ -1,35 +1,44 @@
 #!/usr/bin/node
-// using Star Wars API, prints all `characters` of a given film, in order
 const request = require('request');
+const process = require('process');
 
-function getCharName (url) {
-  return new Promise((resolve, reject) => {
-    request(url, (error, response, body) => {
-      if (error) {
-        reject(error);
+const URL = 'https://swapi-api.alx-tools.com/api/films/';
+const filmId = process.argv[2];
+
+request(URL + filmId + '/', (err, res, body) => {
+  if (err) {
+    console.log(err);
+    return;
+  } else if (res.statusCode !== 200) {
+    console.log('Error');
+    return;
+  }
+
+  body = JSON.parse(body);
+
+  const printed = [];
+  const charactersLength = body.characters.length;
+
+  for (let i = 0; i < charactersLength; i++) {
+    request(body.characters[i], (err, res, body) => {
+      if (err) {
+        console.log(err);
+        return;
+      } else if (res.statusCode !== 200) {
+        console.log('Error');
+        return;
       }
-      resolve(JSON.parse(body).name);
+
+      body = JSON.parse(body);
+      printed.push({ index: i, name: body.name });
+
+      if (printed.length === charactersLength) {
+        printed.sort((a, b) => a.index - b.index);
+
+        for (let j = 0; j < printed.length; j++) {
+          console.log(printed[j].name);
+        }
+      }
     });
-  });
-}
-
-async function charsInFilm (urlList) {
-  try {
-    let name;
-    for (const url of urlList) {
-      name = await getCharName(url);
-      console.log(name);
-    }
-  } catch (error) {
-    console.error(error);
   }
-}
-
-const filmsURL = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
-request(filmsURL, function (error, response, body) {
-  if (error) {
-    console.error(error);
-  }
-  const urlList = JSON.parse(body).characters;
-  charsInFilm(urlList);
 });
