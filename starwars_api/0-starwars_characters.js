@@ -1,40 +1,35 @@
 #!/usr/bin/node
-
+// using Star Wars API, prints all `characters` of a given film, in order
 const request = require('request');
 
-if (process.argv.length < 3) {
-  console.log('Usage: ./0-starwars_characters.js <Movie_ID>');
-  process.exit(1);
+function getCharName (url) {
+  return new Promise((resolve, reject) => {
+    request(url, (error, response, body) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(JSON.parse(body).name);
+    });
+  });
 }
 
-const movieId = process.argv[2];
-const apiUrl = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
+async function charsInFilm (urlList) {
+  try {
+    let name;
+    for (const url of urlList) {
+      name = await getCharName(url);
+      console.log(name);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-request(apiUrl, function (error, response, body) {
+const filmsURL = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
+request(filmsURL, function (error, response, body) {
   if (error) {
     console.error(error);
-    return;
   }
-
-  const film = JSON.parse(body);
-  const characters = film.characters;
-
-  // Helper function to print characters in order
-  const printCharacters = (index) => {
-    if (index >= characters.length) return;
-
-    request(characters[index], function (err, res, data) {
-      if (err) {
-        console.error(err);
-        return;
-      }
-
-      const character = JSON.parse(data);
-      console.log(character.name);
-      printCharacters(index + 1);
-    });
-  };
-
-  printCharacters(0);
+  const urlList = JSON.parse(body).characters;
+  charsInFilm(urlList);
 });
-
