@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 def rain(walls):
     """
     Given a list of non-negative integers representing wall heights,
