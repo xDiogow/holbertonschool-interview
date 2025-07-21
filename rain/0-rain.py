@@ -1,4 +1,15 @@
 #!/usr/bin/python3
+"""
+0-rain module
+
+This module provides a single function `rain(walls)` that calculates
+how many square units of rainwater can be trapped between walls after it rains.
+
+Each wall is represented by a non-negative integer in a list,
+where each integer corresponds to the height of a wall of unit width 1.
+"""
+
+
 def rain(walls):
     """
     Given a list of non-negative integers representing wall heights,
